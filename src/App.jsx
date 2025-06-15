@@ -1,45 +1,24 @@
-import {
-  CustomerReviews,
-  Footer,
-  Hero,
-  PopularProducts,
-  Services,
-  SpecialOffer,
-  Subscribe,
-  SuperQuality,
-} from "./sections";
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 import Nav from "./components/Nav";
 
-  const App = () => {
-    return (
-      <main className='relative scroll-smooth selection:bg-coral-red selection:text-black'>
-        <Nav />
-        <section className='xl:padding-l wide:padding-r padding-b'>
-          <Hero />
-        </section>
-        <section className='padding'>
-          <PopularProducts />
-        </section>
-        <section className='padding'>
-          <SuperQuality />
-        </section>
-        <section className='padding-x py-10'>
-          <Services />
-        </section>
-        <section className='padding'>
-          <SpecialOffer />
-        </section>
-        <section className='bg-pale-blue padding'>
-          <CustomerReviews />
-        </section>
-        <section className='padding-x sm:py-32 py-16 w-full'>
-          <Subscribe />
-        </section>
-        <section className=' bg-gradient-to-b from-white  to-coral-red padding-x padding-t pb-8'>
-          <Footer />
-        </section>
-      </main>
-    );
-  };
+// Optional: Lazy-load future pages like About, Shop, Contact, etc.
+// import About from './pages/About';
+// import ProductPage from './pages/ProductPage';
+
+const App = () => {
+  return (
+    <>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* Add more routes here */}
+        {/* <Route path="/about" element={<About />} /> */}
+        {/* <Route path="/product/:id" element={<ProductPage />} /> */}
+      </Routes>
+    </>
+  );
+};
 
 export default App;
+
