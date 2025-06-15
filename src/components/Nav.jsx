@@ -46,6 +46,17 @@ const Nav = () => {
           ))}
         </ul>
 
+        {/* Products Catalog (desktop) */}
+        <div className='gap-2 text-lg leading-normal font-medium font-montserrat max-lg:hidden wide:mr-24 -mr-10 bg-transparent justify-center flex'>
+                <Link className='group' to='/products'>
+            <span className="relative pb-1 text-black after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">
+              Explore
+            </span>
+          </Link>
+
+         </div>
+     
+
         {/* Auth links (desktop) */}
         <div className='gap-2 text-lg leading-normal font-medium font-montserrat max-lg:hidden wide:mr-24 -mr-10 bg-transparent justify-center flex'>
           <Link className='group' to='/signin'>
@@ -78,26 +89,24 @@ const Nav = () => {
       {isOpen && (
         <div className="dropdown-menu absolute mt-5 right-0 gap-x-10 bg-white rounded-md shadow-lg">
           <ul className='grow flex-col list-item p-2'>
-            <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
-              <a href="#home" onClick={handleCloseMenu}>Home</a>
+          {navLinks.map((item) => (
+            <li key={item.label} className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
+              <HashLink 
+                smooth 
+                to={item.href}
+              >
+                  {item.label}
+              </HashLink>
             </li>
-            <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
-              <a href="#about-us" onClick={handleCloseMenu}>About Us</a>
-            </li>
-            <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
-              <a href="#products" onClick={handleCloseMenu}>Products</a>
-            </li>
-            <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
-              <a href="#contact-us" onClick={handleCloseMenu}>Contact Us</a>
-            </li>
+          ))}
+          <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
+          <Link to="/products" onClick={handleCloseMenu}>Explore</Link>
+          </li>
             <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
               <Link to="/signin" onClick={handleCloseMenu}>Sign In</Link>
             </li>
             <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
               <Link to="/signup" onClick={handleCloseMenu}>Sign Up</Link>
-            </li>
-            <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
-              <Link to="/explore-now" onClick={handleCloseMenu}>Explore Now</Link>
             </li>
           </ul>
         </div>
