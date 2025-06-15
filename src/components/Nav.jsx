@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 import { headerLogo } from '../assets/images';
 import { hamburger, navcross } from '../assets/icons';
@@ -32,14 +33,15 @@ const Nav = () => {
         <ul className='flex-1 flex justify-center items-center gap-20 max-lg:hidden'>
           {navLinks.map((item) => (
             <li key={item.label}>
-              <a
-                href={item.href}
+              <HashLink 
+                smooth 
+                to={item.href}
                 className='font-montserrat leading-normal text-lg text-slate-gray btn group flex items-center bg-transparent tracking-wide'
               >
                 <span className="relative pb-1 after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">
                   {item.label}
                 </span>
-              </a>
+              </HashLink>
             </li>
           ))}
         </ul>
