@@ -5,6 +5,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </>
   );

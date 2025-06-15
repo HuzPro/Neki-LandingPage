@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 import { headerLogo } from '../assets/images';
-import { hamburger, navcross } from '../assets/icons';
+import { hamburger, navcross, shoppingCart } from '../assets/icons';
 import { navLinks } from '../constants';
 
 const Nav = () => {
@@ -72,6 +72,18 @@ const Nav = () => {
           </Link>
         </div>
 
+        {/* Cart (desktop) */}
+        <div className='gap-2 text-lg leading-normal font-medium font-montserrat max-lg:hidden wide:mr-24 -mr-10 bg-transparent justify-center flex'>
+          <Link className='group' to='/cart'>
+              <img
+              src={shoppingCart}
+              alt="Cart"
+              className="w-12 h-12"
+              />
+          </Link>
+        </div>
+
+
         {/* Hamburger menu toggle */}
         <div className='hidden max-lg:block'>
           <img
@@ -107,6 +119,9 @@ const Nav = () => {
             </li>
             <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
               <Link to="/signup" onClick={handleCloseMenu}>Sign Up</Link>
+            </li>
+            <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
+              <Link to="/cart" onClick={handleCloseMenu}>Cart</Link>
             </li>
           </ul>
         </div>

@@ -3,14 +3,16 @@ import { products } from '../constants';
 import Button from '../components/Button';
 
 import { star } from '../assets/icons';
+import { useCart } from '../context/CartContext';
 
 const ProductDetail = () => {
-  const { id } = useParams();
-  const product = products.find((p) => p.id === id);
+    const { id } = useParams();
+    const { addToCart } = useCart();
+    const product = products.find((p) => p.id === id);
+    
+    if (!product) return <div className="padding">Product not found</div>;
 
-  if (!product) return <div className="padding">Product not found</div>;
-
-  return (
+    return (
     <section className="max-container padding flex flex-col lg:flex-row gap-10">
       <img src={product.imgURL} alt={product.name} className="w-full max-w-md object-contain" />
 
@@ -26,7 +28,7 @@ const ProductDetail = () => {
         </div>
 
         <div className="mt-10">
-          <Button label="Add to Cart" />
+          <Button label="Add to Cart" onClick={() => addToCart(product)} />
         </div>
       </div>
     </section>
