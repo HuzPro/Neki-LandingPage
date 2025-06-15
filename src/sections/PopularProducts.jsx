@@ -1,5 +1,5 @@
 import { products } from "../constants";
-import PopularProductCard from "../components/PopularProductCard";
+import ProductCard from "../components/ProductCard";
 
 const PopularProducts = () => {
   return (
@@ -11,7 +11,7 @@ const PopularProducts = () => {
 
       <div className="mt-16 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 sm:gap-6 gap-14">
         {products.map((product) => (
-          <PopularProductCard key= {product.name} {...product} />
+          <ProductCard key= {product.id} {...product} />
         ))}
       </div>
     </section>

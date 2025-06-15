@@ -32,23 +32,35 @@ export const statistics = [
 export const products = [
     {
         imgURL: shoe4,
+        id: 'shoe-1',
         name: "Neki Near Norpan-01",
+        description: "Perfect for walking over life's disappointments.",
         price: "$200.20",
+        rating: 4.5,
     },
     {
         imgURL: shoe5,
+        id: 'shoe-2',
         name: "Neki Lair Lordan-10",
+        description: "Perfect for walking over life's disappointments.",
         price: "$210.20",
+        rating: 4.5,
     },
     {
         imgURL: shoe6,
+        id: 'shoe-3',
         name: "Neki Bear Borgan-100",
+        description: "Perfect for walking over life's disappointments.",
         price: "$220.20",
+        rating: 4.5,
     },
     {
         imgURL: shoe7,
+        id: 'shoe-4',
         name: "Neki Hair Hordan-001",
+        description: "Perfect for walking over life's disappointments.",
         price: "$230.20",
+        rating: 4.5,
     },
 ];
 
