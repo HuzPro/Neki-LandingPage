@@ -50,7 +50,7 @@ const Nav = () => {
         <div className='gap-2 text-lg leading-normal font-medium font-montserrat max-lg:hidden wide:mr-24 -mr-10 bg-transparent justify-center flex'>
                 <Link className='group' to='/products'>
             <span className="relative pb-1 text-black after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">
-              Explore
+              Products
             </span>
           </Link>
 
@@ -100,7 +100,7 @@ const Nav = () => {
             </li>
           ))}
           <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
-          <Link to="/products" onClick={handleCloseMenu}>Explore</Link>
+          <Link to="/products" onClick={handleCloseMenu}>Products</Link>
           </li>
             <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
               <Link to="/signin" onClick={handleCloseMenu}>Sign In</Link>

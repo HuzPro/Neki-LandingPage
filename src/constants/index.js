@@ -3,7 +3,7 @@ import { bigShoe1, bigShoe2, bigShoe3, customer1, customer2, customer3, customer
 
 export const navLinks = [
     { href: "/#home", label: "Home" },
-    { href: "/#products", label: "Products" },
+    { href: "/#products", label: "Featured" },
     { href: "/#about-us", label: "About Us" },
     { href: "/#contact-us", label: "Contact Us" },
 ];
