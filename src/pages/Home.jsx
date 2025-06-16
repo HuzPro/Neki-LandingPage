@@ -8,11 +8,9 @@ import {
   Subscribe,
   SuperQuality,
 } from "../sections";
-import Nav from "../components/Nav";
 
 const Home = () => (
   <main className='relative scroll-smooth selection:bg-coral-red selection:text-black'>
-    <Nav />
     <section className='xl:padding-l wide:padding-r padding-b'>
       <Hero />
     </section>
