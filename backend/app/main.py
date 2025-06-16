@@ -52,5 +52,15 @@ async def read_users_me(current_user: models.User = Depends(security.get_current
     return current_user
 
 # To run the backend:
-# cd Neki-LandingPage/backend
-# uvicorn app.main:app --reload
+# Option 1: Navigate to the 'backend' directory first
+#   cd Neki-LandingPage/backend
+#   uvicorn app.main:app --reload
+#
+# Option 2: Run from the project root directory ('Neki-LandingPage')
+#   uvicorn backend.app.main:app --reload
+#
+# The error "ModuleNotFoundError: No module named 'app'" occurs if you are in the
+# 'Neki-LandingPage' directory and run 'uvicorn app.main:app --reload' directly.
+# This is because Python looks for an 'app' module in the current directory,
+# but it's located in 'Neki-LandingPage/backend/app'.
+# Use one of the commands above based on your current directory.
