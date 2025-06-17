@@ -96,7 +96,6 @@ def add_shoe(
 
     # Generate a unique filename
     ext = os.path.splitext(image.filename)[1]
-    print(ext)
     if ext not in [".png", ".jpg", ".jpeg", ".svg"]:
         raise HTTPException(status_code=403, detail="Invalid filetype")
     image_id = f"{uuid.uuid4()}{ext}"
@@ -120,6 +119,8 @@ def add_shoe(
     return crud.create_shoe(db, shoe_data)
 
 
+import os
+
 @app.delete("/shoes/{shoe_id}", response_model=schemas.Shoe)
 def remove_shoe(
     shoe_id: int = Path(..., gt=0),
@@ -128,9 +129,22 @@ def remove_shoe(
 ):
     if current_user.email != "admin@neki.com":
         raise HTTPException(status_code=403, detail="Only admin can remove shoes")
-    deleted = crud.delete_shoe(db, shoe_id)
-    if not deleted:
+    
+    # First get the shoe so we can access imgURL before deleting it
+    shoe = crud.get_shoe_by_id(db, shoe_id)
+    if not shoe:
         raise HTTPException(status_code=404, detail="Shoe not found")
+    
+    # Remove the shoe from DB
+    deleted = crud.delete_shoe(db, shoe_id)
+
+    # Extract the image filename from imgURL and construct the absolute path
+    if shoe.imgURL:
+        image_filename = shoe.imgURL.split("/")[-1]
+        image_path = os.path.join(UPLOAD_DIR, image_filename)
+        if os.path.exists(image_path):
+            os.remove(image_path)
+
     return deleted
 
 # To run the backend:
