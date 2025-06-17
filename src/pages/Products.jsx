@@ -19,7 +19,6 @@ const Products = () => {
     };
 
     fetchShoes();
-      console.log(shoes)
   }, []);
 
   return (

@@ -1,8 +1,10 @@
 import { arrowRight } from "../assets/icons";
 import { offer } from "../assets/images";
+import { useNavigate } from 'react-router-dom';
 import Button from "../components/Button";
 
 const SpecialOffer = () => {
+  const navigate = useNavigate();
   return (
     <section className="flex justify-wrap items-center max-xl:flex-col-reverse gap-10 max-container">
       <div className="flex-1">
@@ -24,7 +26,7 @@ const SpecialOffer = () => {
           nothing short of exceptional.
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
-          <Button label="Shop Now" iconURL={arrowRight}/>
+          <Button label="Shop Now" onClick={() => navigate('/products/')} />
           <Button 
             label="Learn more"
             backgroundColor="bg-white"
@@ -32,6 +34,7 @@ const SpecialOffer = () => {
             textColor="text-slate-gray"
             hoverBg="hover:bg-slate-gray"
             hoverText="hover:text-white"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           />
         </div>
       </div>

@@ -1,7 +1,9 @@
 import { shoe8 } from "../assets/images";
+import { useNavigate } from 'react-router-dom';
 import Button from "../components/Button";
 
 const SuperQuality = () => {
+  const navigate = useNavigate();
   return (
     <section 
     id="about-us"
@@ -23,7 +25,7 @@ const SuperQuality = () => {
         Our dedication to detail and excellence ensures your satisfaction
         </p>
         <div className="mt-10">
-          <Button label="View Details"/>
+            <Button label="View Details" onClick={() => navigate('/products/5')} />
         </div>
       </div>
 

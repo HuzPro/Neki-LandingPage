@@ -4,10 +4,11 @@ import Button from "../components/Button";
 import { shoes, statistics } from "../constants";
 import ShoeCard from "../components/ShoeCard";
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
-  const [bigShoeImg, setBigShoeImg] =
-  useState(bigShoe1)
+  const [bigShoeImg, setBigShoeImg] = useState(bigShoe1)
+  const navigate = useNavigate()
 
   return (
     <section
@@ -24,8 +25,7 @@ const Hero = () => {
         </h1>
         <p className="font-montserrat text-slate-gray text-lg leading-8 mt-6 mb-14 sm:max-w-sm">
           Discover majestic Neki arrivals, quality, comfortability, and genius for your uneventful life.</p>
-        <Button label="Show Now"
-        iconURL={arrowRight} />
+          <Button label="Shop Now" onClick={() => navigate('/products/')} />
 
         <div className="flex justify-start items-start flex-wrap w-full mt-20 gap-16">
           {statistics.map((stat, 

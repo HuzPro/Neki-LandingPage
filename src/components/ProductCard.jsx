@@ -3,7 +3,6 @@ import { star } from '../assets/icons';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ imgURL, id, name, description, price, rating }) => {
-    console.log(imgURL)
   return (
     <Link to={`/products/${id}`}>
     <div className='flex flex-1 flex-col w-full max-sm:w-full bg-white py-4 px-4 rounded-2xl shadow-3xl
