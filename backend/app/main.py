@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException, status, Path
 from fastapi import File, UploadFile, Form
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import timedelta
@@ -19,6 +20,14 @@ origins = [
     "http://127.0.0.1:5173",
     # Add other origins if needed
 ]
+
+# Mount images directory
+# Absolute path to ../static/images
+images_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../static/images"))
+
+# Serve images at /images/ path
+app.mount("/images", StaticFiles(directory=images_dir), name="images")
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -90,7 +99,7 @@ def add_shoe(
         f.write(image.file.read())
 
     # Construct the image URL or relative path
-    img_url = f"/static/{image_id}"  # adjust depending on how you serve static files
+    img_url = f"/images/{image_id}"  # adjust depending on how you serve static files
 
     # Create shoe record
     shoe_data = schemas.ShoeCreate(
