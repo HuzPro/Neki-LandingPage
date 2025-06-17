@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const { user, isAuthenticated } = useAuth();
@@ -25,8 +26,18 @@ const Profile = () => {
           <div>
             <span className="font-semibold text-black">Email:</span> {user.email || 'N/A'}
           </div>
-          {/* Add more fields if needed, like orders, role, etc. */}
         </div>
+
+        {user.email === 'admin@neki.com' && (
+          <div className="mt-8 text-center">
+            <Link
+              to="/admin"
+              className="inline-block bg-coral-red text-white font-montserrat px-6 py-3 rounded-lg shadow hover:bg-red-600 transition"
+            >
+              Go to Admin Panel
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

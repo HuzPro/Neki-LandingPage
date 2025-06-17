@@ -76,7 +76,7 @@ def get_shoe(shoe_id: int = Path(..., gt=0), db: Session = Depends(database.get_
     return shoe
 
 
-UPLOAD_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../uploads/static"))
+UPLOAD_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../static/images"))
 
 @app.post("/shoes/", response_model=schemas.Shoe)
 def add_shoe(
@@ -88,7 +88,7 @@ def add_shoe(
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(security.get_current_active_user),
 ):
-    if current_user.email is not "admin@neki.htb":
+    if current_user.email != "admin@neki.com":
         raise HTTPException(status_code=403, detail="Only admin can add shoes")
 
     # Ensure upload directory exists
@@ -96,7 +96,8 @@ def add_shoe(
 
     # Generate a unique filename
     ext = os.path.splitext(image.filename)[1]
-    if ext not in ["png", "jpg", "jpeg", "svg"]:
+    print(ext)
+    if ext not in [".png", ".jpg", ".jpeg", ".svg"]:
         raise HTTPException(status_code=403, detail="Invalid filetype")
     image_id = f"{uuid.uuid4()}{ext}"
     image_path = os.path.join(UPLOAD_DIR, image_id)
@@ -125,7 +126,7 @@ def remove_shoe(
     db: Session = Depends(database.get_db),
     current_user: models.User = Depends(security.get_current_active_user),
 ):
-    if current_user.email is not "admin@neki.htb":
+    if current_user.email != "admin@neki.com":
         raise HTTPException(status_code=403, detail="Only admin can remove shoes")
     deleted = crud.delete_shoe(db, shoe_id)
     if not deleted:
