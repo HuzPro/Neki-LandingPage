@@ -21,7 +21,7 @@ class TokenData(BaseModel):
     email: Optional[str] = None
 
 class ShoeBase(BaseModel):
-    imgUrl: str
+    imgURL: str
     name: str
     description: str
     price: int

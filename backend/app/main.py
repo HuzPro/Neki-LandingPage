@@ -68,6 +68,13 @@ async def read_users_me(current_user: models.User = Depends(security.get_current
 def get_shoes(db: Session = Depends(database.get_db)):
     return crud.get_all_shoes(db)
 
+@app.get("/shoes/{shoe_id}", response_model=schemas.Shoe)
+def get_shoe(shoe_id: int = Path(..., gt=0), db: Session = Depends(database.get_db)):
+    shoe = crud.get_shoe_by_id(db, shoe_id)
+    if not shoe:
+        raise HTTPException(status_code=404, detail="Shoe not found")
+    return shoe
+
 
 UPLOAD_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../uploads/static"))
 
@@ -89,7 +96,7 @@ def add_shoe(
 
     # Generate a unique filename
     ext = os.path.splitext(image.filename)[1]
-    if ext not in ["png", "jpg", "jpeg"]:
+    if ext not in ["png", "jpg", "jpeg", "svg"]:
         raise HTTPException(status_code=403, detail="Invalid filetype")
     image_id = f"{uuid.uuid4()}{ext}"
     image_path = os.path.join(UPLOAD_DIR, image_id)
@@ -107,7 +114,7 @@ def add_shoe(
         description=description,
         price=price,
         rating=rating,
-        imgUrl=img_url,
+        imgURL=img_url,
     )
     return crud.create_shoe(db, shoe_data)
 

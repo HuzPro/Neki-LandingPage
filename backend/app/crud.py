@@ -14,3 +14,24 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+def get_all_shoes(db: Session):
+    return db.query(models.Shoe).all()
+
+def get_shoe_by_id(db: Session, shoe_id: int):
+    return db.query(models.Shoe).filter(models.Shoe.id == shoe_id).first()
+
+def create_shoe(db: Session, shoe: schemas.ShoeCreate):
+    db_shoe = models.Shoe(**shoe.model_dump())
+    db.add(db_shoe)
+    db.commit()
+    db.refresh(db_shoe)
+    return db_shoe
+
+def delete_shoe(db: Session, shoe_id: int):
+    shoe = db.query(models.Shoe).filter(models.Shoe.id == shoe_id).first()
+    if shoe:
+        db.delete(shoe)
+        db.commit()
+    return shoe
+

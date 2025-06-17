@@ -12,7 +12,7 @@ class Shoe(Base):
     __tablename__ = "shoes"
 
     id = Column(Integer, primary_key=True)
-    imgUrl = Column(String)
+    imgURL = Column(String)
     name = Column(String, index=True)
     description = Column(String)
     price = Column(Integer)
