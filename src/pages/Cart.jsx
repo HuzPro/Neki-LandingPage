@@ -13,7 +13,7 @@ const Cart = () => {
         {cartItems.map((item) => (
           <li key={item.id} className="flex items-center justify-between border-b pb-4">
             <div className="flex gap-4 items-center">
-              <img src={item.imgURL} alt={item.name} className="w-20 h-20 object-contain" />
+              <img src={`http://localhost:8000${item.imgURL}`} alt={item.name} className="w-20 h-20 object-contain" />
               <div>
                 <h4 className="text-lg font-semibold">{item.name}</h4>
                 <p className="text-slate-gray">{item.price} × {item.quantity}</p>
