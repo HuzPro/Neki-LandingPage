@@ -1,4 +1,7 @@
-// ...existing code...
+# Database
+backend/neki_users.db
+
+# ...existing code...
 node_modules/
 dist/
 

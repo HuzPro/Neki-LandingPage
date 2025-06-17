@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 
 import { headerLogo } from '../assets/images';
-import { hamburger, navcross, shoppingCart } from '../assets/icons';
+import { hamburger, navcross, shoppingCart, profileIcon } from '../assets/icons'; // <-- Add profileIcon here
 import { navLinks } from '../constants';
+import { useAuth } from '../context/AuthContext';
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout, isAuthenticated } = useAuth();
+
   const handleHamburgerClick = () => {
     setIsOpen(!isOpen);
   };
@@ -48,41 +51,64 @@ const Nav = () => {
 
         {/* Products Catalog (desktop) */}
         <div className='gap-2 text-lg leading-normal font-medium font-montserrat max-lg:hidden wide:mr-24 -mr-10 bg-transparent justify-center flex'>
-                <Link className='group' to='/products'>
+          <Link className='group' to='/products'>
             <span className="relative pb-1 text-black after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">
               Products
             </span>
           </Link>
-
-         </div>
-     
+        </div>
 
         {/* Auth links (desktop) */}
         <div className='gap-2 text-lg leading-normal font-medium font-montserrat max-lg:hidden wide:mr-24 -mr-10 bg-transparent justify-center flex'>
-          <Link className='group' to='/signin'>
-            <span className="relative pb-1 text-black after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">
-              Sign in
-            </span>
-          </Link>
-          <span>/</span>
-          <Link className='group' to='/signup'>
-            <span className="relative pb-1 text-black after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">
-              Sign up
-            </span>
-          </Link>
+          {isAuthenticated ? (
+            <Link
+              to="#"
+              onClick={(e) => {
+                e.preventDefault();
+                logout();
+              }}
+              className="group text-black relative pb-1 after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100"
+            >
+              <span className="relative pb-1 text-black">
+                Logout
+              </span>
+            </Link>
+          ) : (
+            <>
+              <Link className='group' to='/signin'>
+                <span className="relative pb-1 text-black after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">
+                  Sign in
+                </span>
+              </Link>
+              <span>/</span>
+              <Link className='group' to='/signup'>
+                <span className="relative pb-1 text-black after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">
+                  Sign up
+                </span>
+              </Link>
+            </>
+          )}
         </div>
 
-        {/* Cart (desktop) */}
-        <div className='gap-2 text-lg leading-normal font-medium font-montserrat max-lg:hidden wide:mr-24 -mr-10 bg-transparent justify-center flex'>
+        {/* Cart and Profile (desktop) */}
+        <div className='gap-4 text-lg leading-normal font-medium font-montserrat max-lg:hidden wide:mr-24 -mr-10 bg-transparent justify-center flex'>
           <Link className='group' to='/cart'>
-              <img
+            <img
               src={shoppingCart}
               alt="Cart"
               className="w-12 h-12"
-              />
+            />
           </Link>
+          { isAuthenticated &&
+          <Link className='group' to='/profile'>
+            <img
+              src={profileIcon}
+              alt="Profile"
+              className="w-10 h-10 rounded-full border border-slate-300 hover:border-coral-red transition-all duration-200"
+            />
+          </Link>
+          }
         </div>
-
 
         {/* Hamburger menu toggle */}
         <div className='hidden max-lg:block'>
@@ -101,27 +127,48 @@ const Nav = () => {
       {isOpen && (
         <div className="dropdown-menu absolute mt-5 right-0 gap-x-10 bg-white rounded-md shadow-lg">
           <ul className='grow flex-col list-item p-2'>
-          {navLinks.map((item) => (
-            <li key={item.label} className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
-              <HashLink 
-                smooth 
-                to={item.href}
-              >
+            {navLinks.map((item) => (
+              <li key={item.label} className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
+                <HashLink 
+                  smooth 
+                  to={item.href}
+                  onClick={handleCloseMenu}
+                >
                   {item.label}
-              </HashLink>
-            </li>
-          ))}
-          <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
-          <Link to="/products" onClick={handleCloseMenu}>Products</Link>
-          </li>
+                </HashLink>
+              </li>
+            ))}
             <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
-              <Link to="/signin" onClick={handleCloseMenu}>Sign In</Link>
+              <Link to="/products" onClick={handleCloseMenu}>Products</Link>
             </li>
-            <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
-              <Link to="/signup" onClick={handleCloseMenu}>Sign Up</Link>
-            </li>
+            {isAuthenticated ? (
+              <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
+                <Link
+                  to="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    logout();
+                    handleCloseMenu();
+                  }}
+                >
+                  Logout
+                </Link>
+              </li>
+            ) : (
+              <>
+                <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
+                  <Link to="/signin" onClick={handleCloseMenu}>Sign In</Link>
+                </li>
+                <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
+                  <Link to="/signup" onClick={handleCloseMenu}>Sign Up</Link>
+                </li>
+              </>
+            )}
             <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
               <Link to="/cart" onClick={handleCloseMenu}>Cart</Link>
+            </li>
+            <li className='hover:bg-coral-red m-1 pl-2 pr-2 rounded-md cursor-pointer'>
+              <Link to="/profile" onClick={handleCloseMenu}>Profile</Link>
             </li>
           </ul>
         </div>

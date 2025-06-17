@@ -12,6 +12,7 @@ import truckFast from './truck-fast.svg'
 import twitter from './twitter.svg'
 import navcross from './nav-cross.svg'
 import shoppingCart from './shopping-cart.svg'
+import profileIcon from './profile-icon.svg'
 
 export {
     arrowRight,
@@ -27,5 +28,6 @@ export {
     truckFast,
     twitter,
     navcross,
-    shoppingCart
+    shoppingCart,
+    profileIcon
 }
