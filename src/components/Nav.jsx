@@ -69,7 +69,7 @@ const Nav = () => {
               }}
               className="group text-black relative pb-1 after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100"
             >
-              <span className="relative pb-1 text-black">
+              <span className="relative pb-1 text-black after:transition-transform after:duration-500 after:ease-out after:absolute after:bottom-0 after:left-0 after:block after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-coral-red after:content-[''] after:group-hover:origin-bottom-left after:group-hover:scale-x-100">
                 Logout
               </span>
             </Link>
