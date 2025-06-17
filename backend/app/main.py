@@ -1,8 +1,11 @@
 from fastapi import Depends, FastAPI, HTTPException, status, Path
+from fastapi import File, UploadFile, Form
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import timedelta
+import uuid
+import os
 
 from . import crud, models, schemas, security, database
 
@@ -56,9 +59,6 @@ async def read_users_me(current_user: models.User = Depends(security.get_current
 def get_shoes(db: Session = Depends(database.get_db)):
     return crud.get_all_shoes(db)
 
-import uuid
-import os
-from fastapi import File, UploadFile, Form
 
 UPLOAD_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../uploads/static"))
 
