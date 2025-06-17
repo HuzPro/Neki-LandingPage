@@ -12,7 +12,8 @@ from dotenv import load_dotenv, find_dotenv
 
 dotenv_path = find_dotenv()
 if not dotenv_path:
-    print("⚠️  .env file not found...")
+    print("⚠️  .env file not found, exiting...")
+    exit()
 
 load_dotenv()  # Loads from .env into os.environ
 

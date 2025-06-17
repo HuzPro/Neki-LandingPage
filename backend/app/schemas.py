@@ -19,3 +19,20 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: Optional[str] = None
+
+class ShoeBase(BaseModel):
+    imgUrl: str
+    name: str
+    description: str
+    price: int
+    rating: str
+
+class ShoeCreate(ShoeBase):
+    pass
+
+class Shoe(ShoeBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+

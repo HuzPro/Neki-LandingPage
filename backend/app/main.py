@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Depends, FastAPI, HTTPException, status, Path
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
@@ -50,6 +50,71 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)
 @app.get("/users/me/", response_model=schemas.User)
 async def read_users_me(current_user: models.User = Depends(security.get_current_active_user)):
     return current_user
+
+
+@app.get("/shoes/", response_model=list[schemas.Shoe])
+def get_shoes(db: Session = Depends(database.get_db)):
+    return crud.get_all_shoes(db)
+
+import uuid
+import os
+from fastapi import File, UploadFile, Form
+
+UPLOAD_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../uploads/static"))
+
+@app.post("/shoes/", response_model=schemas.Shoe)
+def add_shoe(
+    name: str = Form(...),
+    description: str = Form(...),
+    price: int = Form(...),
+    rating: str = Form(...),
+    image: UploadFile = File(...),
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(security.get_current_active_user),
+):
+    if current_user.email is not "admin@neki.htb":
+        raise HTTPException(status_code=403, detail="Only admin can add shoes")
+
+    # Ensure upload directory exists
+    os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+    # Generate a unique filename
+    ext = os.path.splitext(image.filename)[1]
+    if ext not in ["png", "jpg", "jpeg"]:
+        raise HTTPException(status_code=403, detail="Invalid filetype")
+    image_id = f"{uuid.uuid4()}{ext}"
+    image_path = os.path.join(UPLOAD_DIR, image_id)
+
+    # Save the image to disk
+    with open(image_path, "wb") as f:
+        f.write(image.file.read())
+
+    # Construct the image URL or relative path
+    img_url = f"/static/{image_id}"  # adjust depending on how you serve static files
+
+    # Create shoe record
+    shoe_data = schemas.ShoeCreate(
+        name=name,
+        description=description,
+        price=price,
+        rating=rating,
+        imgUrl=img_url,
+    )
+    return crud.create_shoe(db, shoe_data)
+
+
+@app.delete("/shoes/{shoe_id}", response_model=schemas.Shoe)
+def remove_shoe(
+    shoe_id: int = Path(..., gt=0),
+    db: Session = Depends(database.get_db),
+    current_user: models.User = Depends(security.get_current_active_user),
+):
+    if current_user.email is not "admin@neki.htb":
+        raise HTTPException(status_code=403, detail="Only admin can remove shoes")
+    deleted = crud.delete_shoe(db, shoe_id)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Shoe not found")
+    return deleted
 
 # To run the backend:
 # Option 1: Navigate to the 'backend' directory first
